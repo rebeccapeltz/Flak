@@ -1,0 +1,11 @@
+body {
+  background-color: #000;
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+h1 {
+  font-size: 1em;
+}
+.welcome {
+  color: #bada55
+}
