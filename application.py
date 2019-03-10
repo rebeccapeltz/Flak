@@ -23,6 +23,10 @@ def registerUserDisplayName(data):
     app.logger.info("register user: ", data["displayname"])
     displayNames.append(data["displayname"])
 
+@socketio.on('fetch channels')
+def fetchChannels():
+  emit('channel list',channels)
+
 @socketio.on("display name create")
 def createDisplayName(data):
   app.logger.debug("xxxxxxx  in createDisplayName")

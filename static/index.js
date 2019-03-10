@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.emit('register with server', {
             'displayname': displayname
         })        // set welcome name
+        socket.emit('fetch channels')
         document.querySelector("#show-display-name").innerHTML = displayname
     } else {
         //show the create input #display-name section
@@ -63,6 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector("#create-display-name-btn").disabled = true
             // hide section
             document.querySelector("#display-name").setAttribute("style", "display:none;")
+            // get the channels
+            emit('fetch channels')
         } else {
             //report error and leave form
             document.querySelector(".error").innerHTML = data.message

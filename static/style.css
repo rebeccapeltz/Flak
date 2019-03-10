@@ -13,3 +13,17 @@ h1 {
 .error {
   color: red;
 }
+
+.channel-item{
+  width: 10rem;
+  height: 2rem;
+  line-height: 2rem;
+  padding-left: 1rem;
+  background-color: lightgray;
+  color: black;
+  border: 1px solid white;
+  list-style-type:none;
+}
+.channel-item:hover {
+  cursor: pointer;
+}
