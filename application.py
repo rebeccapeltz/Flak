@@ -9,7 +9,8 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
 displayNames = []
-channels = ["fun","work","school"]
+#channels = ["fun","work","school"]
+channels = []
 
 @app.route("/")
 def index():
