@@ -5,15 +5,28 @@ body {
 }
 
 h1 {
-  font-size: 1em;
+  font-size: 1.5rem;
+}
+h2 {
+  font-size: 1.3rem;
+}
+
+.create-channel-input {
+  padding: 1rem;
+  width: 20rem;;
+  height: auto;
+  background-color: lightgray;
+  margin: 1rem 0;
+  color: black;
 }
 
 .welcome {
   color: #bada55
 }
 
-.error {
+.error, .not-found {
   color: red;
+  font-size: 1.5rem;
 }
 
 .channel-list {

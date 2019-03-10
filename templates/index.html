@@ -26,16 +26,23 @@
     <section>
         <p id="create-display-error" class="error">No error</p>
     </section>
-    <section id="channels">
-        <p class="create-a-channel-message">Create a channel</p>
-
-        <p class="no-channels-message">No channels</p>
+    <section id="channels">   
+        <p class="not-found" id="channels-not-found">No channels found. You can create a channel.</p> 
+        <div class="create-channel-input">
+            <h3 class="create-a-channel-message">Create a channel</h3>
+            <form id="create-channel">
+                <p>
+                    <label for="new-channel-input">Channel Name</label>
+                    <input type="text" id="new-channel-input">
+                </p>
+            </form>
+        </div>
         <p class="select-a-channel-message">Select a channel</p>
         <div class="channel-message-grid">
             <ul class="channel-list"></ul>
             <div class="message-list">
                 <h2></h2>
-                
+
             </div>
         </div>
     </section>
