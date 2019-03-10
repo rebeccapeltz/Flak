@@ -27,6 +27,12 @@ def registerUserDisplayName(data):
 @socketio.on('fetch channels')
 def fetchChannels():
   emit('channel list',channels)
+@socketio.on('create channel')
+def createChannel(data):
+  # no error if already there just emit
+  if data["newchannel"] not in channels:
+    channels.append(data["newchannel"])
+  emit('channel list',channels)
 
 @socketio.on("display name create")
 def createDisplayName(data):

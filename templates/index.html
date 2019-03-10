@@ -6,6 +6,7 @@
     <script src="{{ url_for('static', filename='index.js') }}"></script>
     <script src="{{ url_for('static', filename='channel.js') }}"></script>
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
     <title>Flack</title>
 </head>
 
@@ -35,6 +36,9 @@
                     <label for="new-channel-input">Channel Name</label>
                     <input type="text" id="new-channel-input">
                 </p>
+                <p>
+                    <button type="submit" id="create-channel-btn">Create Channel</button>
+                </p>
             </form>
         </div>
         <div id="select-channel">
@@ -43,7 +47,6 @@
                 <ul class="channel-list"></ul>
                 <div class="message-list">
                     <h2></h2>
-
                 </div>
             </div>
         </div>

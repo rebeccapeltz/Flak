@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.emit('register with server', {
             'displayname': displayname
         })        // set welcome name
-        socket.emit('fetch channels')
+        //socket.emit('fetch channels')
         document.querySelector("#show-display-name").innerHTML = displayname
     } else {
         //show the create input #display-name section

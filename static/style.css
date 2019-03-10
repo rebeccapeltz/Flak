@@ -1,7 +1,8 @@
 body {
   background-color: #000;
   color: white;
-  font-family: "Courier New", Courier, monospace;
+  /* font-family: "Courier New", Courier, monospace; */
+  font-family: 'Ubuntu Mono', monospace;
 }
 
 h1 {
