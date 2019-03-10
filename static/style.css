@@ -3,9 +3,11 @@ body {
   color: white;
   font-family: "Courier New", Courier, monospace;
 }
+
 h1 {
   font-size: 1em;
 }
+
 .welcome {
   color: #bada55
 }
@@ -14,16 +16,56 @@ h1 {
   color: red;
 }
 
-.channel-item{
-  width: 10rem;
+.channel-list {
+  margin: 0;
+}
+
+.channel-item {
+  /* width: 10rem; */
   height: 2rem;
   line-height: 2rem;
-  padding-left: 1rem;
+  /* padding-left: 1rem; */
   background-color: lightgray;
   color: black;
   border: 1px solid white;
-  list-style-type:none;
+  list-style-type: none;
+  padding-left: 20px;
 }
+
 .channel-item:hover {
   cursor: pointer;
+  background-color: rgb(240 255 240);
+}
+
+.message-list {
+  display: block;
+  border: 1px solid limegreen;
+  /* width: 200px; */
+  height: auto;
+  background-color: lightgreen
+}
+
+.channel-message-grid {
+  display: grid;
+  grid-column-gap: 10px;
+  grid-template-columns: 10rem auto;
+  width: 70%;
+  /* margin: 0 auto; */
+}
+
+.channel-list,
+.message-list {
+  /* width: 100%; */
+  padding: 0;
+  background-color: white;
+  color: black;
+}
+
+.message-list h2 {
+  color: black;
+  padding: .5rem 0;
+  margin: 0;
+  text-align: center;
+  cursor: pointer;
+ 
 }
