@@ -12,6 +12,11 @@ h2 {
   font-size: 1.3rem;
 }
 
+.brand {
+  text-shadow: 2px 2px 5px #bada55;
+
+}
+
 .create-channel-input {
   padding: 1rem;
   width: 20rem;;
