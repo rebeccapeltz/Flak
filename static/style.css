@@ -9,3 +9,7 @@ h1 {
 .welcome {
   color: #bada55
 }
+
+.error {
+  color: red;
+}

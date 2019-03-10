@@ -1,3 +1,6 @@
 pip3 install -r requirements.txt
 export FLASK_APP=application.py
 flask run
+export THREADED=True
+export FLASK_DEBUG=1
+export FLASK_ENV=development
