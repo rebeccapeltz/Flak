@@ -8,7 +8,15 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
-displayNames = []
+# class User:
+#   def __init__(self, displayname):
+#     self.displayname = displayname
+#     self.messages = []
+
+# displayNames = []
+testDisplayName = "test"
+# testUser = User(testDisplayName)
+displayNames = {testDisplayName:[]}
 #channels = ["fun","work","school"]
 channels = []
 
@@ -22,7 +30,10 @@ def registerUserDisplayName(data):
   # no error if already registered but don't add twice
   if data["displayname"] not in displayNames:
     app.logger.info("register user: ", data["displayname"])
-    displayNames.append(data["displayname"])
+    # displayNames.append(data["displayname"])
+    # key is name and value is array of messages
+    displayNames[data["display"]] = []
+    
 
 @socketio.on('fetch channels')
 def fetchChannels():
@@ -42,9 +53,10 @@ def createDisplayName(data):
     message = f'Display name {data["displayname"]} already in use'
     resp = {"status":"fail","message":message}
   else:
-    displayNames.append(data["displayname"])
+    # displayNames.append(data["displayname"])
+    displayNames[data["displayname"]] = []
     resp = {"status":"success","message":data["displayname"]}
-  app.logger.debug("display name create end",displayNames)
+  app.logger.debug("display name create end",displayNames.keys())
   emit("create display name results",resp)
 
 # @socketio.on("submit vote")

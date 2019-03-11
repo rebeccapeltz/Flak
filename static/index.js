@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // hide error message for init
     document.querySelector(".error").innerHTML = ""
     document.querySelector(".error").setAttribute("style", "display:none;")
+    // hide channels for init
+    document.querySelector("#channels").style = "display:none"
+
 
     // DISPLAY NAME
     // hide create display name input
@@ -30,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })        // set welcome name
         //socket.emit('fetch channels')
         document.querySelector("#show-display-name").innerHTML = displayname
+        document.querySelector("#channels").style = "display:block"
     } else {
         //show the create input #display-name section
         document.querySelector("#display-name").setAttribute("style", "display:block;")
@@ -52,6 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // attempted create display name handler
     socket.on('create display name results', data => {
         if (data.status === "success") {
+            // clear any error messages
+            document.querySelector(".error").style = "display:none"
             //welcome and hide form        
             //set local storage with displayname
             localStorage.displayname = displayname
@@ -64,6 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector("#create-display-name-btn").disabled = true
             // hide section
             document.querySelector("#display-name").setAttribute("style", "display:none;")
+            // show channels section
+            document.querySelector("#channels").style = "display:block"
             // get the channels
             emit('fetch channels')
         } else {
