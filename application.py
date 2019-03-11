@@ -18,7 +18,10 @@ testDisplayName = "test"
 # testUser = User(testDisplayName)
 displayNames = {testDisplayName:[]}
 #channels = ["fun","work","school"]
-channels = []
+# channels = []
+testChannel = "test-channel"
+channels = {testChannel:[]}
+
 
 @app.route("/")
 def index():
@@ -37,13 +40,17 @@ def registerUserDisplayName(data):
 
 @socketio.on('fetch channels')
 def fetchChannels():
-  emit('channel list',channels)
+  channelNames = list(channels.keys())
+  emit('channel list',channelNames)
+
 @socketio.on('create channel')
 def createChannel(data):
   # no error if already there just emit
   if data["newchannel"] not in channels:
-    channels.append(data["newchannel"])
-  emit('channel list',channels)
+    # channels.append(data["newchannel"])
+    channels[data["newchannel"]] = []
+  channelNames = list(channels.keys())
+  emit('channel list',channelNames)
 
 @socketio.on("display name create")
 def createDisplayName(data):
@@ -56,8 +63,9 @@ def createDisplayName(data):
     # displayNames.append(data["displayname"])
     displayNames[data["displayname"]] = []
     resp = {"status":"success","message":data["displayname"]}
-  app.logger.debug("display name create end",displayNames.keys())
-  emit("create display name results",resp)
+    debugDisplayNames = list(displayNames.keys())
+  app.logger.debug("display name create end",debugDisplayNames)
+  socket.emit("create display name results",resp)
 
 # @socketio.on("submit vote")
 # def vote(data):
