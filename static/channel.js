@@ -1,12 +1,10 @@
-let channelList = [];
 
 function updateChannelList(data) {
-  channelList = data
   let channelListEl = document.querySelector('#channels ul')
   //clear list
   channelListEl.innerHTML = ''
   //add items
-  channelList.forEach(channel => {
+  data.forEach(channel => {
     console.log(channel)
     let listItem = document.createElement('li')
     listItem.setAttribute("class", "channel-item")
@@ -47,8 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.emit('fetch channels')
   })
 
-  // create channel
-  // process submit
 
 
   // listen for channel update from server
@@ -57,29 +53,27 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     let newChannel = document.querySelector('#new-channel-input').value
     //check here to see if this channel exists?
-    if (channelList.indexOf(newChannel) > -1) {
-      // alert(`Channel "${newChannel}" already in list`)
-      let channelListItems = document.querySelectorAll('.channel-list li')
-      channelListItems.forEach(item => {
-        console.log("existing item", item.dataset.channel)
-        if (item.dataset.channel === newChannel) {
-          let origColor = item.style.color
-          let origFontWeight = item.style.fontWeight
-          item.style.color = 'red'
-          item.style.fontWeight = 'bold'
-          setTimeout(function () {
-            item.style.color = origColor
-            item.style.fontWeight = origFontWeight
-          }, 3000);
-        }
-      })
-    } else {
+    let channelExists = false;
+    let channelListItems = document.querySelectorAll('.channel-list li')
+    channelListItems.forEach(item => {
+      console.log("existing item", item.dataset.channel)
+      if (item.dataset.channel === newChannel) {
+        channelExists = true
+        let origColor = item.style.color
+        let origFontWeight = item.style.fontWeight
+        item.style.color = 'red'
+        item.style.fontWeight = 'bold'
+        setTimeout(function () {
+          item.style.color = origColor
+          item.style.fontWeight = origFontWeight
+        }, 3000);
+      }
+    })
+    if (!channelExists) {
       socket.emit('create channel', {
         "newchannel": newChannel
       })
     }
     document.querySelector('#new-channel-input').value = ''
   }
-
-
 })
