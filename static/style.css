@@ -69,15 +69,23 @@ h2 {
   grid-column-gap: 10px;
   grid-template-columns: 10rem auto;
   width: 70%;
+ 
   /* margin: 0 auto; */
 }
 
-.channel-list,
+.channel-list {
+  padding: 0;
+  background-color: black;
+  height: 300px;
+  overflow-y: scroll;
+}
 .message-list {
   /* width: 100%; */
   padding: 0;
   background-color: white;
   color: black;
+  height: 300px;
+  overflow-y: scroll;
 }
 
 .message-list h2 {

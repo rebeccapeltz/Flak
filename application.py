@@ -1,5 +1,6 @@
 import os
 import requests
+import datetime
 
 from flask import Flask, jsonify, render_template, request
 from flask_socketio import SocketIO, emit
@@ -8,10 +9,12 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
-# class User:
-#   def __init__(self, displayname):
-#     self.displayname = displayname
-#     self.messages = []
+class Message:
+  def __init__(self, displayname, message, channel):
+    self.displayName = displayName
+    self.message = message
+    self.channel = channel
+    self.msgDateTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 # displayNames = []
 testDisplayName = "test"

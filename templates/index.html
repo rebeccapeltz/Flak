@@ -42,13 +42,18 @@
             </form>
         </div>
         <div id="select-channel">
-            <p class="select-a-channel-message">Select a channel</p>
+            <form id="send-message"></form>
             <div class="channel-message-grid">
+                <p class="select-a-channel-message">Select a channel</p>
+                <p class=""><input type="text" placeholder="Enter message" size="33">
+                    <button id="send-message-btn" type="submit">Send</button>
+                </p>
                 <ul class="channel-list"></ul>
                 <div class="message-list">
                     <h2></h2>
                 </div>
             </div>
+            </form>
         </div>
     </section>
 
