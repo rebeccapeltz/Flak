@@ -1,3 +1,7 @@
+function displaySelectedChannelInMessageArea(selectedChannel) {
+  document.querySelector('.message-list h2').innerHTML = selectedChannel
+  document.querySelector('.message-list h2').style.backgroundColor = "rgb(240 255 240)"
+}
 
 function updateChannelList(data) {
   let channelListEl = document.querySelector('#channels ul')
@@ -11,14 +15,17 @@ function updateChannelList(data) {
     listItem.setAttribute("data-channel", channel)
     listItem.innerHTML = channel
     listItem.addEventListener('click', (event) => {
+      //deal with user selecting a channel
       //set all backgrounds to lightgray and then selected to light green
       document.querySelectorAll('.channel-item').forEach(item => {
         item.style.backgroundColor = "lightgray";
       })
       event.currentTarget.style.backgroundColor = "rgb(240 255 240)"
-      selectedChannel = event.currentTarget.dataset.channel;
-      document.querySelector('.message-list h2').innerHTML = selectedChannel
-      document.querySelector('.message-list h2').style.backgroundColor = "rgb(240 255 240)"
+      selectedChannel = event.currentTarget.dataset.channel
+      localStorage.setItem("selectedchannel",selectedChannel)
+      displaySelectedChannelInMessageArea(selectedChannel)
+      // document.querySelector('.message-list h2').innerHTML = selectedChannel
+      // document.querySelector('.message-list h2').style.backgroundColor = "rgb(240 255 240)"
     })
     channelListEl.appendChild(listItem)
 
@@ -31,12 +38,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // channel list
   socket.on('channel list', (data) => {
+
     if (data.length > 0) {
+      //render channel list
       updateChannelList(data)
+      //show select channel
       document.querySelector('#select-channel').style = "display:block";
+
+      // check if there is a channel in ls - if there is and it's in the channel list 
+      // then put selected channel in the message area
+      // REMEMBERING channel
+      if (localStorage.getItem('selectedchannel')) {
+        let selectedChannel = localStorage.getItem('selectedchannel')
+        if (data.indexOf(selectedChannel) > -1) {
+          displaySelectedChannelInMessageArea(selectedChannel)
+        } else {
+          //delete from local storage because not in server channel list
+          localStorage.removeItem('selectedChannel')
+        }
+      }
+
       //hide not found
       document.querySelector('#channels-not-found').style = "display:none";
     } else {
+      //show no channels found
       document.querySelector('#select-channel').style = "display:none";
     }
   });
