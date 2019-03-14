@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let selectedChannel = localStorage.getItem('selectedchannel')
         if (data.indexOf(selectedChannel) > -1) {
           displaySelectedChannelInMessageArea(selectedChannel)
+          socket.emit("fetch messages per channel")
         } else {
           //delete from local storage because not in server channel list
           localStorage.removeItem('selectedChannel')
