@@ -5,15 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Connect to websocket
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
-   
-
-    // When a new vote is announced, add to the unordered list
-    // socket.on('vote totals', data => {
-    //     document.querySelector('#yes').innerHTML = data.yes;
-    //     document.querySelector('#no').innerHTML = data.no;
-    //     document.querySelector('#maybe').innerHTML = data.maybe;
-    // });
-
     // hide error message for init
     document.querySelector(".error").innerHTML = ""
     document.querySelector(".error").setAttribute("style", "display:none;")

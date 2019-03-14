@@ -16,14 +16,16 @@ class Message:
     self.channel = channel
     self.msgDateTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-# displayNames = []
 testDisplayName = "test"
 # testUser = User(testDisplayName)
 displayNames = {testDisplayName:[]}
-#channels = ["fun","work","school"]
-# channels = []
+# displayNames = []
+
+
 testChannel = "test-channel"
 channels = {testChannel:[]}
+# channels = ["fun","work","school"]
+# channels = []
 
 
 @app.route("/")
@@ -70,8 +72,31 @@ def createDisplayName(data):
   app.logger.debug("display name create end",debugDisplayNames)
   socket.emit("create display name results",resp)
 
-# @socketio.on("submit vote")
-# def vote(data):
-#     selection = data["selection"]
-#     votes[selection] += 1
-#     emit("vote totals", votes, broadcast=True)
+######messages
+
+@socketio.on("message create")
+def createMessage(data):
+  app.logger.debug("yyyyyyy creating message", data)
+  newMessage = Message(displayname=data.displayname, message=data.messagetext, channel=data.selectedchannel)
+  displayNames[data.displayname].append(newMessage)
+  channels[data.selectedchannel].append(newMessage)
+  # return the the new message
+  socket.emit("messages to render",list(newMessage))
+
+@socketio.on("fetch messages per channel")
+def fetchMessagesPerChannel(data):
+  app.logger.debug("qqqqq fetch per channel",data)
+  #return a list of message for a channel named in data
+  if (channel[data]):
+    socket.emit("messages to render",channel[data])
+  else:
+    #no messages for this channel
+    socket.emit("error",{status:"Error fetching messages per channel",channel:data})
+
+@socketio.on("delete messages per displayname")
+def deleteMessagesPerDisplayName(data):
+  deletedDisplayName = displayNames.pop(data)
+  if deletedDisplayName is not None:
+    socket.emit("remove messages for displayname",data)
+
+
