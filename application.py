@@ -118,15 +118,28 @@ def fetchMessagesPerChannel(data):
     app.logger.debug(f'messages sending {messages}')
     socketio.emit("messages to render",messages)
   else:
-    app.logger.debut("didn't find messages in channel")
+    app.logger.debug("didn't find messages in channel")
     #no messages for this channel
     errorObj = {status:"Error fetching messages per channel",channel:data}
     socketio.emit("error", errorObj)
 
 @socketio.on("delete messages per displayname")
 def deleteMessagesPerDisplayName(data):
-  deletedDisplayName = displayNames.pop(data)
-  if deletedDisplayName is not None:
-    socketio.emit("remove messages for displayname",data)
+  displayName = data["displayname"]
+  app.logger.debug(f'deleting message for {displayName}')
+  #remove messages from user list
+  displayNames[displayName] = []
+  
+
+  # remove object from channels
+  for channel in channels.keys():
+    messages = channels[channel]
+    for message in messages:
+      if message.displayName == displayName:
+        messages.remove(message)
+
+    socketio.emit("remove messages for displayname",displayName)
+  else:
+    app.logger.debug(f'no messages to delete for {displayName}')
 
 

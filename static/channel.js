@@ -5,9 +5,11 @@ function displaySelectedChannelInMessageArea(selectedChannel) {
   document.querySelector('.message-list h2').style.backgroundColor = "rgb(240 255 240)"
 
   //enable text once a channel is selected
-  document.querySelector("#message-text").disable = true
+  // document.querySelector("#message-text").disabled = true
+  disableMessageInputIfNoSelectedChannel()
 
 }
+
 
 function updateChannelList(data) {
   let channelListEl = document.querySelector('#channels ul')
@@ -27,11 +29,12 @@ function updateChannelList(data) {
       document.querySelectorAll('.channel-item').forEach(item => {
         item.style.backgroundColor = "lightgray";
       })
-      event.currentTarget.style.backgroundColor = "rgb(240 255 240)"
+      event.currentTarget.style.backgroundColor = "red"//"rgb(240 255 240)"
       selectedChannel = event.currentTarget.dataset.channel
       localStorage.setItem("selectedchannel", selectedChannel)
-      socket.emit('fetch channels')
-      // displaySelectedChannelInMessageArea(selectedChannel)
+      // //////////??socket.emit('fetch channels')
+      displaySelectedChannelInMessageArea(selectedChannel)
+      enableMessageInput()
       // document.querySelector('.message-list h2').innerHTML = selectedChannel
       // document.querySelector('.message-list h2').style.backgroundColor = "rgb(240 255 240)"
     })
@@ -61,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateChannelList(data)
       //show select channel
       document.querySelector('#select-channel').style = "display:block";
+     
 
       // check if there is a channel in ls - if there is and it's in the channel list 
       // then put selected channel in the message area
@@ -70,6 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.indexOf(selectedChannel) > -1) {
           //show channel in message
           displaySelectedChannelInMessageArea(selectedChannel)
+
+          //find in selected channel in channel list and color background red
+          document.querySelectorAll('.channel-list li').forEach(channel=>{
+            if (channel.dataset.channel === selectedChannel){
+              channel.style.backgroundColor="red"
+            } 
+          })
 
           console.log("emitting fetch messages per channel")
           socket.emit("fetch messages per channel", selectedChannel)
@@ -89,10 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
   });
-
-  socket.on('connect', () => {
-    socket.emit('fetch channels')
-  })
 
 
 

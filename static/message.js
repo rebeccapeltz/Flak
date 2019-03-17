@@ -12,7 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // document.querySelector("#send-message-btn").disabled = false
     document.getElementById('send-message-btn').removeAttribute("disabled")
   })
-  // hnadle message submit
+
+  //handle delete all messages for a user
+  document.querySelector("#delete-all-messages-for-user").addEventListener('click', function (event) {
+    let displayname = localStorage.getItem("displayname")
+    socket.emit("delete messages per displayname", {
+      'displayname': displayname
+    })
+  })
+
+  // handlemessage submit
   //handle display form submit
   document.querySelector('#send-message').onsubmit = function (e) {
     e.preventDefault();
@@ -35,14 +44,38 @@ document.addEventListener('DOMContentLoaded', () => {
       'displayname': displayname,
       'selectedchannel': selectedchannel
     }
-    socket.emit('message create', {"newmessage":newmessage})
+    socket.emit('message create', {
+      "newmessage": newmessage
+    })
 
-    
+
 
 
     socket.on('remove messages for displayname', data => {
       // data shold be displayname
-      //iterate through message and if there messages listed
+      console.log("remove message for ", data)
+
+      //message elements should have data with displayname of user that created the message
+      //iterate through displayed message and if name is there remove it
+      let messageEls = document.querySelectorAll('.message-list li')
+
+      .forEach(message=> {
+        if (message.dataset.displayname === data){
+          message.remove()
+        }
+      })
+
+      // for (let i = 0; i <= messageEls.length; i++) {
+      //   if (messageEls[i].hasAttribute("data-displayname")) {
+      //     let dataDisplayname = messageEls[i].getAttribute("data-displayname")
+      //     if (dataDisplayname === data) {
+      //       messageEls.splice(i, 1);
+      //     }
+      //   }
+      // }
+
+
+
       //with this username remove them from display 
 
     })
@@ -55,9 +88,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
-// form#send-message
-// input #message-text
-// submit "send-message-btn"
-
-// message is li in .channel-list
-//
