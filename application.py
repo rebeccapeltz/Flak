@@ -78,7 +78,7 @@ def createDisplayName(data):
     resp = {"status":"success","message":data["displayname"]}
     debugDisplayNames = list(displayNames.keys())
     app.logger.debug(f'display name create end: {debugDisplayNames}')
-  socketio.emit(f'create display name results: {resp}')
+  socketio.emit('create display name results', resp)
 
 ######messages
 

@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector("#channels").style = "display:none"
 
 
+
     // DISPLAY NAME
     // hide create display name input
     document.querySelector("#display-name").setAttribute("style", "display:none;")
@@ -25,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
         //socket.emit('fetch channels')
         document.querySelector("#show-display-name").innerHTML = displayname
         document.querySelector("#channels").style = "display:block"
+        //after showing channels disable input and button until a channel is selected
+        document.querySelector("#message-text").disable = true
+        document.querySelector("#send-message-btn").disable = true
     } else {
         //show the create input #display-name section
         document.querySelector("#display-name").setAttribute("style", "display:block;")

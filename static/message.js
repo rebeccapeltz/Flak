@@ -39,31 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
 
-    // attempted message create handler
-    // if successful returns all message for this channel
-    // socket.on('messages to render', data => {
-    //   //find selected channel
-    //   //use selected channel to select message to post to message list
-    //   if (localStorage.getItem('selectedchannel')) {
-    //     //clear input
-    //     document.querySelector("#message-text").value = ''
-    //     let selectedChannel = localStorage.getItem('selectedchannel')
-    //     // data should be list of messages
-    //     //check for error?
-    //     //if no error render all  messages to message list .message-text
-    //     let messageList = document.querySelector('.message-list ul')
-    //     messageList.innerHTML = ''
-    //     for (let message of data) {
-    //       if (message.channel === selectedChannel) {
-    //         let listItem = document.createElement('li')
-    //         listItem.innerHTML = `${message.message} (${message.displayName}) @${message.msgDateTime} `
-    //         messageList.appendChild(listItem)
-    //       }
-    //     }
-    //   }
-
-
-    // })
 
     socket.on('remove messages for displayname', data => {
       // data shold be displayname
@@ -85,3 +60,4 @@ document.addEventListener('DOMContentLoaded', () => {
 // submit "send-message-btn"
 
 // message is li in .channel-list
+//

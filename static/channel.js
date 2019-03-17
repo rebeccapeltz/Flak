@@ -3,6 +3,10 @@ var socket = io.connect(location.protocol + '//' + document.domain + ':' + locat
 function displaySelectedChannelInMessageArea(selectedChannel) {
   document.querySelector('.message-list h2').innerHTML = selectedChannel
   document.querySelector('.message-list h2').style.backgroundColor = "rgb(240 255 240)"
+
+  //enable text once a channel is selected
+  document.querySelector("#message-text").disable = true
+
 }
 
 function updateChannelList(data) {
@@ -25,7 +29,7 @@ function updateChannelList(data) {
       })
       event.currentTarget.style.backgroundColor = "rgb(240 255 240)"
       selectedChannel = event.currentTarget.dataset.channel
-      localStorage.setItem("selectedchannel",selectedChannel)
+      localStorage.setItem("selectedchannel", selectedChannel)
       socket.emit('fetch channels')
       // displaySelectedChannelInMessageArea(selectedChannel)
       // document.querySelector('.message-list h2').innerHTML = selectedChannel
@@ -43,7 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector("#create-channel-btn").disabled = true
   document.querySelector("#new-channel-input").addEventListener("keyup", () => {
     document.querySelector("#create-channel-btn").disabled = false
-})
+  })
+
+  // hide not found message by default
+  document.querySelector('#channels-not-found').style = "display:none";
+
 
   // channel list
   socket.on('channel list', (data) => {
@@ -60,9 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (localStorage.getItem('selectedchannel')) {
         let selectedChannel = localStorage.getItem('selectedchannel')
         if (data.indexOf(selectedChannel) > -1) {
+          //show channel in message
           displaySelectedChannelInMessageArea(selectedChannel)
+
           console.log("emitting fetch messages per channel")
-          socket.emit("fetch messages per channel",selectedChannel)
+          socket.emit("fetch messages per channel", selectedChannel)
         } else {
           //delete from local storage because not in server channel list
           localStorage.removeItem('selectedChannel')
@@ -74,6 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       //show no channels found
       document.querySelector('#select-channel').style = "display:none";
+      // sow not found
+      document.querySelector('#channels-not-found').style = "display:block";
+
     }
   });
 
@@ -86,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // listen for channel update from server
   document.querySelector('form#create-channel').onsubmit = function (e) {
     console.group('create channel submit')
-    
+
     e.preventDefault();
 
     //disapble create button

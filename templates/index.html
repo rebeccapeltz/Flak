@@ -43,13 +43,18 @@
                 </p>
             </form>
         </div>
+        <p>
+            <button id="delete-all-messages-for-user">Delete All Messages for Current User</button>
+        </p>
         <div id="select-channel">
             <form id="send-message">
                 <div class="channel-message-grid">
                     <p class="select-a-channel-message">Select a channel</p>
-                    <p class=""><input id="message-text" type="text" placeholder="Enter message" size="33">
-                        <button id="send-message-btn" type="submit">Send</button>
-                    </p>
+                    <div id="enter-message">
+                        <p class=""><input id="message-text" type="text" placeholder="Enter message" size="33">
+                            <button id="send-message-btn" type="submit">Send</button>
+                        </p>
+                    </div>
                     <ul class="channel-list"></ul>
                     <div class="message-list">
                         <h2></h2>
