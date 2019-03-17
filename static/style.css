@@ -8,6 +8,7 @@ body {
 h1 {
   font-size: 1.5rem;
 }
+
 h2 {
   font-size: 1.3rem;
 }
@@ -30,7 +31,8 @@ h2 {
   color: #bada55
 }
 
-.error, .not-found {
+.error,
+.not-found {
   color: red;
   font-size: 1.5rem;
 }
@@ -69,7 +71,7 @@ h2 {
   grid-column-gap: 10px;
   grid-template-columns: 10rem auto;
   width: 70%;
- 
+
   /* margin: 0 auto; */
 }
 
@@ -79,6 +81,7 @@ h2 {
   height: 300px;
   overflow-y: scroll;
 }
+
 .message-list {
   /* width: 100%; */
   padding: 0;
@@ -94,5 +97,9 @@ h2 {
   margin: 0;
   text-align: center;
   cursor: pointer;
- 
+
+}
+
+.select-a-channel-message {
+  font-size: .9rem;
 }

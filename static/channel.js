@@ -6,7 +6,7 @@ function displaySelectedChannelInMessageArea(selectedChannel) {
 
   //enable text once a channel is selected
   // document.querySelector("#message-text").disabled = true
-  disableMessageInputIfNoSelectedChannel()
+ 
 
 }
 
@@ -33,10 +33,15 @@ function updateChannelList(data) {
       selectedChannel = event.currentTarget.dataset.channel
       localStorage.setItem("selectedchannel", selectedChannel)
       // //////////??socket.emit('fetch channels')
+
+      //clear message list
+      document.querySelector('.message-list ul').innerHTML = ''
+
       displaySelectedChannelInMessageArea(selectedChannel)
       enableMessageInput()
       // document.querySelector('.message-list h2').innerHTML = selectedChannel
       // document.querySelector('.message-list h2').style.backgroundColor = "rgb(240 255 240)"
+      socket.emit('fetch messages per channel',selectedChannel)
     })
     channelListEl.appendChild(listItem)
 

@@ -1,6 +1,22 @@
 # Project 2
 
-Web Programming with Python and JavaScript
+## Web Programming with Python and JavaScript
+### Flack - Socket IO Messaging App Using Flack
+
+The user is prompted to enter a **display name** to begin.  Once a display name has been entered it
+is cached in local storage.  
+The user can then create a **channel** and once the channel is selected by clicking on it, the user can begin posting **messages*.   
+
+Messages are displayed with the following information: `message` `display name` `date time`.  
+
+See the picture below for an active Flack display.
+![Flack Front End Display](./flack.png)
+
+
+### Features
+1. The user is prevented from enter empty data for the display name, channel, or message.  
+1. The browser remembers displayname and last channel selected.
+1. A Button is provided for Deleting all message provided by the current user based on display name. There is currently an issue with this.
 
 
 ### Requirements
