@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         //handle display form submit
         document.querySelector('#displayname-form').onsubmit = function(e) {
             e.preventDefault();
+            //disable the submit button
+            document.querySelector("#create-display-name-btn").disabled = true
             //set displayname
             displayname = document.querySelector("#displayname").value
             console.log("socket to display name create",displayname)
@@ -71,4 +73,26 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector(".error").setAttribute("style", "display:block;")
         }
     });
+    socket.on('messages to render', data => {
+        //find selected channel
+        //use selected channel to select message to post to message list
+
+        if (localStorage.getItem('selectedchannel')) {
+          //clear input
+          document.querySelector("#message-text").value = ''
+          let selectedChannel = localStorage.getItem('selectedchannel')
+          // data should be list of messages
+          //check for error?
+          //if no error render all  messages to message list .message-text
+          let messageList = document.querySelector('.message-list ul')
+          messageList.innerHTML = ''
+          for (let message of data) {
+            if (message.channel === selectedChannel) {
+              let listItem = document.createElement('li')
+              listItem.innerHTML = `${message.message} (${message.displayName}) @${message.msgDateTime} `
+              messageList.appendChild(listItem)
+            }
+          }
+        }
+      })
 });

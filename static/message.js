@@ -6,14 +6,21 @@ document.addEventListener('DOMContentLoaded', () => {
   var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
   // disable button until mesage text entered
-  document.querySelector("#send-message-btn").disabled = true
+  // document.querySelector("#send-message-btn").disabled = true
+  document.getElementById('send-message-btn').setAttribute("disabled", "disabled");
   document.querySelector("#message-text").addEventListener("keyup", () => {
-    document.querySelector("#send-message-btn").disabled = false
+    // document.querySelector("#send-message-btn").disabled = false
+    document.getElementById('send-message-btn').removeAttribute("disabled")
   })
   // hnadle message submit
   //handle display form submit
   document.querySelector('#send-message').onsubmit = function (e) {
     e.preventDefault();
+    //disable send buuton
+    // document.querySelector("#send-message-btn").disabled = true
+    // BUG re-disabling submit button only works in debug mode - not sure why?
+    document.getElementById('send-message-btn').setAttribute("disabled", "disabled");
+
     // get channel
     let selectedchannel = localStorage.getItem('selectedchannel')
     // get displayname
@@ -34,29 +41,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // attempted message create handler
     // if successful returns all message for this channel
-    socket.on('messages to render', data => {
-      //find selected channel
-      //use selected channel to select message to post to message list
-      if (localStorage.getItem('selectedchannel')) {
-        //clear input
-        document.querySelector("#message-text").value = ''
-        let selectedChannel = localStorage.getItem('selectedchannel')
-        // data should be list of messages
-        //check for error?
-        //if no error render all  messages to message list .message-text
-        let messageList = document.querySelector('.message-list ul')
-        messageList.innerHTML = ''
-        for (let message of data) {
-          if (message.channel === selectedChannel) {
-            let listItem = document.createElement('li')
-            listItem.innerHTML = `${message.message} (${message.displayName}) @${message.msgDateTime} `
-            messageList.appendChild(listItem)
-          }
-        }
-      }
+    // socket.on('messages to render', data => {
+    //   //find selected channel
+    //   //use selected channel to select message to post to message list
+    //   if (localStorage.getItem('selectedchannel')) {
+    //     //clear input
+    //     document.querySelector("#message-text").value = ''
+    //     let selectedChannel = localStorage.getItem('selectedchannel')
+    //     // data should be list of messages
+    //     //check for error?
+    //     //if no error render all  messages to message list .message-text
+    //     let messageList = document.querySelector('.message-list ul')
+    //     messageList.innerHTML = ''
+    //     for (let message of data) {
+    //       if (message.channel === selectedChannel) {
+    //         let listItem = document.createElement('li')
+    //         listItem.innerHTML = `${message.message} (${message.displayName}) @${message.msgDateTime} `
+    //         messageList.appendChild(listItem)
+    //       }
+    //     }
+    //   }
 
 
-    })
+    // })
 
     socket.on('remove messages for displayname', data => {
       // data shold be displayname

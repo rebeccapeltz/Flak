@@ -40,9 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Connect to websocket
   // var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
+  document.querySelector("#create-channel-btn").disabled = true
+  document.querySelector("#new-channel-input").addEventListener("keyup", () => {
+    document.querySelector("#create-channel-btn").disabled = false
+})
+
   // channel list
   socket.on('channel list', (data) => {
-
+    console.log("channel list")
     if (data.length > 0) {
       //render channel list
       updateChannelList(data)
@@ -56,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let selectedChannel = localStorage.getItem('selectedchannel')
         if (data.indexOf(selectedChannel) > -1) {
           displaySelectedChannelInMessageArea(selectedChannel)
+          console.log("emitting fetch messages per channel")
           socket.emit("fetch messages per channel",selectedChannel)
         } else {
           //delete from local storage because not in server channel list
@@ -80,7 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // listen for channel update from server
   document.querySelector('form#create-channel').onsubmit = function (e) {
     console.group('create channel submit')
+    
     e.preventDefault();
+
+    //disapble create button
+    document.querySelector("#create-channel-btn").disabled = true
     let newChannel = document.querySelector('#new-channel-input').value
     //check here to see if this channel exists?
     let channelExists = false;

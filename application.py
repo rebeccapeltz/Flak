@@ -110,12 +110,15 @@ def fetchMessagesPerChannel(data):
 
   ########need to test if data is a key in channels
   if (data in channels.keys()):  
+    app.logger.debug("found messages in channel")
     # convert messages in channel to dict
     messages = []
     for message in channels[data]:
       messages.append(message.asdict())
+    app.logger.debug(f'messages sending {messages}')
     socketio.emit("messages to render",messages)
   else:
+    app.logger.debut("didn't find messages in channel")
     #no messages for this channel
     errorObj = {status:"Error fetching messages per channel",channel:data}
     socketio.emit("error", errorObj)
