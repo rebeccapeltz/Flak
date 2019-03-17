@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('displayname')) {
         displayname = localStorage.getItem('displayname')
         //register with server
-        socket.emit('register with server', {
+        socket.emit('register user displayname', {
             'displayname': displayname
         })        // set welcome name
         //socket.emit('fetch channels')
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // show channels section
             document.querySelector("#channels").style = "display:block"
             // get the channels
-            emit('fetch channels')
+            socket.emit('fetch channels')
         } else {
             //report error and leave form
             document.querySelector(".error").innerHTML = data.message

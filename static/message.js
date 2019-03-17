@@ -1,3 +1,5 @@
+//TODO on connect get all messages rendered
+
 document.addEventListener('DOMContentLoaded', () => {
   let selectedChannel = null;
   // Connect to websocket
@@ -13,26 +15,46 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#send-message').onsubmit = function (e) {
     e.preventDefault();
     // get channel
-    let selectedchannel = document.querySelector('.message-list h2').innerHTML
+    let selectedchannel = localStorage.getItem('selectedchannel')
     // get displayname
-    let displayname = document.querySelector("#show-display-name").textContent
+    let displayname = localStorage.getItem('displayname')
 
     //set messagetext
     messagetext = document.querySelector("#message-text").value
     console.log("socket to send message", messagetext)
     //create a message using text, user display name and channel
-    socket.emit('message create', {
+    newmessage = {
       'messagetext': messagetext,
       'displayname': displayname,
       'selectedchannel': selectedchannel
-    })
-   
+    }
+    socket.emit('message create', {"newmessage":newmessage})
+
+    
+
     // attempted message create handler
     // if successful returns all message for this channel
     socket.on('messages to render', data => {
-      // data should be list of messages
-      //check for error?
-      //if no error render all  messages to message list
+      //find selected channel
+      //use selected channel to select message to post to message list
+      if (localStorage.getItem('selectedchannel')) {
+        //clear input
+        document.querySelector("#message-text").value = ''
+        let selectedChannel = localStorage.getItem('selectedchannel')
+        // data should be list of messages
+        //check for error?
+        //if no error render all  messages to message list .message-text
+        let messageList = document.querySelector('.message-list ul')
+        messageList.innerHTML = ''
+        for (let message of data) {
+          if (message.channel === selectedChannel) {
+            let listItem = document.createElement('li')
+            listItem.innerHTML = `${message.message} (${message.displayName}) @${message.msgDateTime} `
+            messageList.appendChild(listItem)
+          }
+        }
+      }
+
 
     })
 
@@ -43,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     })
 
-    socket.on ('error',data=>{
+    socket.on('error', data => {
       //look at status and data and post to an error field
     })
 

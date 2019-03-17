@@ -8,7 +8,7 @@
     <script src="{{ url_for('static', filename='message.js') }}"></script>
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
-    
+
     <title>Flack</title>
 </head>
 
@@ -44,18 +44,18 @@
             </form>
         </div>
         <div id="select-channel">
-            <form id="send-message"></form>
-            <div class="channel-message-grid">
-                <p class="select-a-channel-message">Select a channel</p>
-                <p class=""><input id="message-text" type="text" placeholder="Enter message" size="33">
-                    <button id="send-message-btn" type="submit">Send</button>
-                </p>
-                <ul class="channel-list"></ul>
-                <div class="message-list">
-                    <h2></h2>
-                    <ul></ul>
+            <form id="send-message">
+                <div class="channel-message-grid">
+                    <p class="select-a-channel-message">Select a channel</p>
+                    <p class=""><input id="message-text" type="text" placeholder="Enter message" size="33">
+                        <button id="send-message-btn" type="submit">Send</button>
+                    </p>
+                    <ul class="channel-list"></ul>
+                    <div class="message-list">
+                        <h2></h2>
+                        <ul></ul>
+                    </div>
                 </div>
-            </div>
             </form>
         </div>
     </section>

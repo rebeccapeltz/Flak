@@ -1,3 +1,5 @@
+var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
 function displaySelectedChannelInMessageArea(selectedChannel) {
   document.querySelector('.message-list h2').innerHTML = selectedChannel
   document.querySelector('.message-list h2').style.backgroundColor = "rgb(240 255 240)"
@@ -8,6 +10,7 @@ function updateChannelList(data) {
   //clear list
   channelListEl.innerHTML = ''
   //add items
+  // let channels = JSON.parse(data)
   data.forEach(channel => {
     console.log(channel)
     let listItem = document.createElement('li')
@@ -23,7 +26,8 @@ function updateChannelList(data) {
       event.currentTarget.style.backgroundColor = "rgb(240 255 240)"
       selectedChannel = event.currentTarget.dataset.channel
       localStorage.setItem("selectedchannel",selectedChannel)
-      displaySelectedChannelInMessageArea(selectedChannel)
+      socket.emit('fetch channels')
+      // displaySelectedChannelInMessageArea(selectedChannel)
       // document.querySelector('.message-list h2').innerHTML = selectedChannel
       // document.querySelector('.message-list h2').style.backgroundColor = "rgb(240 255 240)"
     })
@@ -34,7 +38,7 @@ function updateChannelList(data) {
 document.addEventListener('DOMContentLoaded', () => {
   let selectedChannel = null;
   // Connect to websocket
-  var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+  // var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
   // channel list
   socket.on('channel list', (data) => {
@@ -52,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let selectedChannel = localStorage.getItem('selectedchannel')
         if (data.indexOf(selectedChannel) > -1) {
           displaySelectedChannelInMessageArea(selectedChannel)
-          socket.emit("fetch messages per channel")
+          socket.emit("fetch messages per channel",selectedChannel)
         } else {
           //delete from local storage because not in server channel list
           localStorage.removeItem('selectedChannel')
