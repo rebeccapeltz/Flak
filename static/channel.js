@@ -27,9 +27,11 @@ function updateChannelList(data) {
       //deal with user selecting a channel
       //set all backgrounds to lightgray and then selected to light green
       document.querySelectorAll('.channel-item').forEach(item => {
-        item.style.backgroundColor = "lightgray";
+        item.style.backgroundColor = "lightgray"
+        item.style.color = "black"
       })
-      event.currentTarget.style.backgroundColor = "red"//"rgb(240 255 240)"
+      event.currentTarget.style.backgroundColor = "blue"//"rgb(240 255 240)"
+      event.currentTarget.style.color = "white"
       selectedChannel = event.currentTarget.dataset.channel
       localStorage.setItem("selectedchannel", selectedChannel)
       // //////////??socket.emit('fetch channels')
@@ -80,10 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
           //show channel in message
           displaySelectedChannelInMessageArea(selectedChannel)
 
-          //find in selected channel in channel list and color background red
+          //find in selected channel in channel list and color background blue
           document.querySelectorAll('.channel-list li').forEach(channel=>{
             if (channel.dataset.channel === selectedChannel){
-              channel.style.backgroundColor="red"
+              channel.style.backgroundColor="blue"
+              channel.style.color = "white"
             } 
           })
 

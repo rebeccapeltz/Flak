@@ -38,7 +38,7 @@ def index():
 @socketio.on('register user displayname')
 def registerUserDisplayName(data):
   displayname = data["displayname"]
-  app.logger.debug(f'xxxxxx in register user displayname: {displayname}')
+  app.logger.debug(f'REGISTER USER DISPLAYNAME in register user displayname: {displayname}')
   # no error if already registered but don't add twice
   if displayname not in DisplayNames:
     app.logger.info(f'register user:  {displayname}')
@@ -50,13 +50,14 @@ def registerUserDisplayName(data):
 @socketio.on('fetch channels')
 def fetchChannels():
   channelNames = list(Channels.keys())
+  app.logger.debug(f"FETCH CHANNELS {channelNames}")
   socketio.emit('channel list',channelNames)
 
 @socketio.on('create channel')
 def createChannel(data):
   # no error if already there just emit
   channel = data['newchannel']
-  app.logger.debug(f'creating channel: {channel}')
+  app.logger.debug(f'CREATE CHANNEL: {channel}')
   app.logger.debug(f'existing Channels: {Channels.keys()}')
   if channel not in Channels:
     # Channels.append(data["newchannel"])
@@ -67,7 +68,7 @@ def createChannel(data):
 
 @socketio.on("display name create")
 def createDisplayName(data):
-  app.logger.debug("xxxxxxx  in createDisplayName")
+  app.logger.debug("DISPLAY NAME CREATE in createDisplayName")
   #check if name exists already
   if data["displayname"] in DisplayNames:
     message = f'Display name {data["displayname"]} already in use'
@@ -88,7 +89,7 @@ def createMessage(data):
   displayname = newmessage["displayname"]
   message = newmessage["messagetext"]
   selectedchannel = newmessage["selectedchannel"]
-  app.logger.debug(f'yyyyyyy creating message: {displayname}, {message}, {selectedchannel}')
+  app.logger.debug(f'MESSAGE GREATE creating message: {displayname}, {message}, {selectedchannel}')
   ###### calling for new message not working
   newMessage = Message(displayname, message, selectedchannel)
   DisplayNames[displayname].append(newMessage)
@@ -99,13 +100,13 @@ def createMessage(data):
   # return all messages
   for message in Channels[selectedchannel]:
     messages.append(message.asdict())
-  app.logger.debug(f'mmmmmm message returning: {messages}')
+  app.logger.debug(f'MESSAGE CREATE message returning: {messages}')
   socketio.emit("messages to render",messages)
 
 @socketio.on("fetch messages per channel")
 def fetchMessagesPerChannel(data):
-  app.logger.debug(f'qqqqq fetch per channel: {data}')
-  app.logger.debug(f'rrrrr current Channels: {Channels.keys()}')
+  app.logger.debug(f'FETCH MESSAGES PER CHANNEL fetch per channel: {data}')
+  app.logger.debug(f'FETCH MESSAGES PER CHANNEL current Channels: {Channels.keys()}')
   #return a list of message for a channel named in data
 
   ########need to test if data is a key in Channels
@@ -135,7 +136,7 @@ def clearServerCache():
 @socketio.on("delete messages per displayname")
 def deleteMessagesPerDisplayName(data):
   displayName = data["displayname"]
-  app.logger.debug(f'deleting message for {displayName}')
+  app.logger.debug(f'DELETING MESSAGES PER DISAPLYNAME deleting message for {displayName}')
   #remove messages from user list
   DisplayNames[displayName] = []
   
@@ -145,10 +146,11 @@ def deleteMessagesPerDisplayName(data):
     app.logger.debug(f'delete messages in Channels  {messages}')
     for message in messages:
       if message.displayName == displayName:
-        app.logger.debug(f'removing message {message}')
+        app.logger.debug(f'REMVING MESSAGE {message}')
         messages.remove(message)
-
-  socketio.emit("remove messages for displayname",displayName)
+  app.logger.debug("SENDING BACK messages in channel")
+  socketio.emit("messages to render",messages)
+  #socketio.emit("remove messages for displayname",displayName)
 
 
 

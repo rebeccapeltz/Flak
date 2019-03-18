@@ -16,7 +16,7 @@ See the picture below for an active Flack display.
 ### Features
 1. The user is prevented from enter empty data for the display name, channel, or message.  
 1. The browser remembers displayname and last channel selected.
-1. A Button is provided for Deleting all message provided by the current user based on display name. There is currently an issue with this.
+1. A Button is provided for Deleting all message provided by the current user based on display name. 
 
 
 ### Requirements
