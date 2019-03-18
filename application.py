@@ -135,7 +135,10 @@ def clearServerCache():
 
 @socketio.on("delete messages per displayname")
 def deleteMessagesPerDisplayName(data):
+  app.logger.debug(f'DELETING MESSAGES PER DISAPLYNAME {data}')
+
   displayName = data["displayname"]
+  selectedChannel = data["selectedchannel"]
   app.logger.debug(f'DELETING MESSAGES PER DISAPLYNAME deleting message for {displayName}')
   #remove messages from user list
   DisplayNames[displayName] = []
@@ -148,9 +151,16 @@ def deleteMessagesPerDisplayName(data):
       if message.displayName == displayName:
         app.logger.debug(f'REMVING MESSAGE {message}')
         messages.remove(message)
-  app.logger.debug("SENDING BACK messages in channel")
-  socketio.emit("messages to render",messages)
-  #socketio.emit("remove messages for displayname",displayName)
+  #only return data if there is a selected channel and then return the messages
+  #associated with that channel
+  if (len(selectedChannel)) > 0:
+    app.logger.debug(f"SENDING BACK messages in channel {selectedChannel}")
+    fetchMessagesPerChannel(selectedChannel)
+  else:   
+    nomessages = []
+    app.logger.debug(f"SENDING BACK EMPTY messages because no channel selected")
+    socketio.emit("messages to render",nomessages)
+    #socketio.emit("remove messages for displayname",displayName)
 
 
 

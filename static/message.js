@@ -13,8 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
   //handle delete all messages for a user
   document.querySelector("#delete-all-messages-for-user").addEventListener('click', function (event) {
     let displayname = localStorage.getItem("displayname")
+    let selectedchannel = localStorage.getItem("selectedchannel")
+    if (!selectedchannel) selectedchannel = ''
     socket.emit("delete messages per displayname", {
-      'displayname': displayname
+      'displayname': displayname,
+      'selectedchannel':selectedchannel
     })
   })
 
