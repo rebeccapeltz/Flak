@@ -1,5 +1,8 @@
 # Project 2
 
+## View demo deployment
+[heroku deployment](https://dry-cliffs-36678.herokuapp.com/)
+
 ## Web Programming with Python and JavaScript
 ### Flack - Socket IO Messaging App Using Flack
 
@@ -29,3 +32,21 @@ See the picture below for an active Flack display.
 1. Sending Messages: Once in a channel, users should be able to send text messages to others the channel. When a user sends a message, their display name and the timestamp of the message should be associated with the message. All users in the channel should then see the new message (with display name and timestamp) appear on their channel page. Sending and receiving messages should NOT require reloading the page.
 1. Remembering the Channel: If a user is on a channel page, closes the web browser window, and goes back to your web application, your application should remember what channel the user was on previously and take the user back to that channel.
 1. Personal Touch: Add at least one additional feature to your chat application of your choosing! Feel free to be creative, but if you’re looking for ideas, possibilities include: supporting deleting one’s own messages, supporting use attachments (file uploads) as messages, or supporting private messaging between two users.
+
+### Instructions for Deployment to Heroku
+## Steps to depoly to heroku  
+eventlet must be installed for deployment to heroku  
+
+
+1. `virtualenv env`
+1. `pip3 install flask`
+1. `pip3 install gunicorn`
+1. `git init`
+1. add .gitignore with `env`
+1. add Procfile with `web: gunicorn --worker-class eventlet -w 1  application:app`
+1. run `pip3 freeze > requirements.txt`
+1. `git commit -m"...`
+1. `heroku login`
+1. `heroku create`
+1. `git push heroku master`
+1. `heroku open`
