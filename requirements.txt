@@ -3,9 +3,9 @@ certifi==2024.7.4
 chardet==3.0.4
 Click==7.0
 django>=2.1.9
-dnspython==1.16.0
-eventlet==0.40.3
-Flask==2.2.5
+dnspython==2.6.1
+eventlet==0.31.0
+Flask==1.0.2
 Flask-Session==0.3.1
 Flask-SocketIO==4.0.0
 Flask-SQLAlchemy==2.3.2
